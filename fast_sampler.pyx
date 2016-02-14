@@ -19,7 +19,7 @@ cdef extern from "<cmath>" nogil:
 ctypedef struct SampleInfo:
     unsigned int idx
     unsigned int level
-    unsigned int indx_in_level
+    unsigned int idx_in_level
     double weight
 
 cdef class FastSampler:

@@ -1,15 +1,19 @@
 from distutils.core import setup
-from Cython.Build import cythonize
+from distutils.extension import Extension
+from Cython.Distutils import build_ext
 import numpy
 
 import Cython.Compiler.Options
 # Output the html page for each file
 Cython.Compiler.Options.annotate = True
 
-extra_args = ["-std=c++0x", "-stdlib=libc++"]
-
 setup(
-    ext_modules = cythonize(["*.pyx", "random_fast.cpp"],
-        language="c++"),
+    cmdclass = {'build_ext': build_ext},
     include_dirs = [numpy.get_include()],
+    ext_modules=[
+        Extension("fast_sampler", ["fast_sampler.pyx"], #"random_fast.cpp"
+            language="c++",         
+            libraries=["stdc++"],
+            include_dirs=[numpy.get_include()]),
+    ],
 )
