@@ -41,7 +41,7 @@ cdef class FastSampler:
     cdef double [::1] level_max
 
     def __init__(self, unsigned int max_entries, double max_value=100, double min_value=1):
-        cdef unsigned int i
+        cdef int i
         
         #cdef double exponent
         self.nentries = 0
@@ -69,7 +69,7 @@ cdef class FastSampler:
     @cython.initializedcheck(False)
     cpdef add(self, unsigned int idx, double weight):
         cdef int raw_level
-        cdef unsigned int level
+        cdef int level
         
         if weight > self.max_value or weight < self.min_value:
             raise Exception("Weight out of range: %1.2e" % weight)
@@ -93,7 +93,7 @@ cdef class FastSampler:
     @cython.initializedcheck(False)
     cdef SampleInfo _sample(self):
         cdef double u, u_lvl, level_max, idx_weight, inner_sample, inner_sample_floor
-        cdef unsigned int idx, level, level_size, idx_in_level
+        cdef int idx, level, level_size, idx_in_level
         cdef double cumulative_weight = 0
         cdef bool reject
         
@@ -132,7 +132,7 @@ cdef class FastSampler:
     @cython.wraparound(False)
     @cython.initializedcheck(False)
     cpdef unsigned int sampleAndRemove(self):
-        cdef unsigned int swap_idx
+        cdef int swap_idx
         
         cdef SampleInfo s = self._sample()
         
